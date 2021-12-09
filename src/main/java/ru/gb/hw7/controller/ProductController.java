@@ -1,11 +1,11 @@
-package ru.gb.springbootjava.controller;
+package ru.gb.hw7.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.springbootjava.entity.Product;
-import ru.gb.springbootjava.service.ProductService;
+import ru.gb.hw7.entity.Product;
+import ru.gb.hw7.service.ProductService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,37 +32,38 @@ public class ProductController {
 
     @RequestMapping(value="/create", method = RequestMethod.POST)
     public String processCreate(Product product){
-         if(product.getId() == null){
-            productService.add(product);
-         } else{
-             productService.edit(product);
-         }
-         return "redirect:/product/all";
+        productService.add(product);
+        return "redirect:/product/all";
     }
 
     @RequestMapping(value="/id={id}", method = RequestMethod.GET)
-     public String getProductByID(Model model, @PathVariable Integer id){
+    public String getProductByID(Model model, @PathVariable Long id){
         Product product = productService.returnByID(id);
         model.addAttribute("product", product);
         return "product";
-     }
+    }
 
-     @RequestMapping(path = "/delete", method = RequestMethod.GET)
-     public String delete(@RequestParam Integer id){
+    @RequestMapping(path = "/delete", method = RequestMethod.GET)
+    public String delete(@RequestParam Long id){
         productService.deleteByID(id);
-         return "redirect:/product/all";
-     }
+        return "redirect:/product/all";
+    }
 
-     @RequestMapping(path = "/edit", method = RequestMethod.GET)
-     public String edit(Model model, @RequestParam Integer id){
+    @RequestMapping(path = "/edit", method = RequestMethod.GET)
+    public String edit(Model model, @RequestParam Long id){
         Product product = productService.returnByID(id);
         model.addAttribute("product", product);
         return "create-product";
-     }
-    
+    }
+
     @RequestMapping(path = "/all", method = RequestMethod.GET)
-    public String showProducts(Model model){
-        List<Product> productList = productService.returnAll();
+    public String showProducts(Model model, @RequestParam(value = "sort", required = false) String sort){
+        Iterable<Product> productList;
+        if (sort != null) {
+            productList = productService.returnSorted(sort);
+        } else {
+             productList = productService.returnAll();
+        }
         model.addAttribute("productsList", productList);
         return "product-list";
     }

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="ru.gb.springbootjava.entity.Product" %>
+<%@ page import="ru.gb.hw7.entity.Product" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ilavinogradov

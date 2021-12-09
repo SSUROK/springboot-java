@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="ru.gb.springbootjava.entity.Product" %>
+<%@ page import="ru.gb.hw7.entity.Product" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ilavinogradov
@@ -14,12 +14,16 @@
 </head>
 <body>
 <h1>List</h1>
-    <table>
-        <%int k = 0;%>
-        <tr>
-        <jsp:useBean id="productsList" scope="request" type="java.util.List"/>
+        <jsp:useBean id="productsList" scope="request" type="java.lang.Iterable"/>
+        <c:url var="sortFromMaxToMin" value="/product/all">
+            <c:param name="sort" value="max"/>
+        </c:url>
+        <a href="${sortFromMaxToMin}"> Sort from max to min</a>
+        <c:url var="sortFromMinToMax" value="/product/all">
+            <c:param name="sort" value="min"/>
+        </c:url>
+        <a href="${sortFromMinToMax}"> Sort from min to max</a><br>
         <c:forEach var="product" items="${productsList}">
-            <td>
                 <c:url var="viewProduct" value="/product/id= + ${product.id}">
                 </c:url>
                 Name: <a href="${viewProduct}">${product.title}</a><br>
@@ -28,10 +32,8 @@
                 <c:url var="addToCart" value="/cart/add/id= + ${product.id}">
                 </c:url>
                 <a href="${addToCart}"> Add to cart</a>
-            </td>
+            <hr>
             </c:forEach>
-        </tr>
-    </table>
 <br>
 <c:url var="editProduct" value="/product/create">
     <c:param name="id" value="${product.id}"/>

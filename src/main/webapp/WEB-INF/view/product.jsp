@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%@ page import="ru.gb.springbootjava.entity.Product" %><%--
+<%@ page import="ru.gb.hw7.entity.Product" %><%--
   Created by IntelliJ IDEA.
   User: ilavinogradov
   Date: 25.11.2021
